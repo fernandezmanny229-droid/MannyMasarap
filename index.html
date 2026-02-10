@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test subject</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url("Baby Blue Printed Solid.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        .container {
+            margin-top: 60px;
+            background: rgba(255, 230, 242, 0.85);
+            padding: 20px;
+            display: inline-block;
+            border-radius: 15px;
+        }
+
+        .top-image {
+            width: 120px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid #ff4d88;
+        }
+
+        h1 {
+            color: #ff4d88;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yes {
+            background-color: #ff4d88;
+            color: white;
+        }
+
+        #no {
+            background-color: #cccccc;
+        }
+
+        /* Hearts animation */
+        .heart {
+            position: fixed;
+            bottom: 0;
+            font-size: 25px;
+            animation: floatUp 2s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-500px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top picture -->
+    <img src="images (49).jpeg" class="top-image">
+
+    <h1>Can you be my Valentine? &#x1F496;</h1>
+
+    <!-- Buttons -->
+    <button id="yes" onclick="yesClicked()">Yes</button>
+    <button id="no" onclick="noClicked()">No</button>
+
+    <!-- Responses -->
+    <p id="response"></p>
+    <p id="warning" style="color: red; font-weight: bold;"></p>
+
+    <!-- Video -->
+    <video id="valentineVideo" width="500" controls style="display:none; margin-top:10px;">
+        <source src="ssstik.io_@veillnx_1770681644786.mp4" type="video/mp4">
+    </video>
+</div>
+
+<script>
+    let yesSize = 16;
+
+    // Unicode-safe messages (emoji via escape codes)
+    const noMessages = [
+        "Are you sure? \u{1F641}",     
+        "Hmm… think again! \u{1F914}", 
+        "Really? \u{1F494}",            
+        "Don't be shy! \u{1FAE3}",      
+        "Give me a chance! \u{1F496}", 
+        "Come on, say Yes! \u{1F618}"  
+    ];
+
+    // Function for hearts
+    function startHearts() {
+        for (let i = 0; i < 20; i++) {
+            let heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = " Thanks \u{1F496} \u{1FAF0} \u{1FAF6}";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 2000);
+        }
+    }
+
+    // Yes button clicked
+    function yesClicked() {
+        document.getElementById("response").innerHTML =
+            "Thank you iztine!, Happy Valentine's Day! \u{1F496}";
+
+        startHearts();
+
+        let vid = document.getElementById("valentineVideo");
+        vid.style.display = "block";
+        vid.currentTime = 0;
+        vid.play().catch(() => {
+            alert("Video cannot autoplay. Open in a browser!");
+        });
+    }
+
+    // No button clicked
+    function noClicked() {
+        yesSize += 10;
+        document.getElementById("yes").style.fontSize = yesSize + "px";
+
+        const warning = document.getElementById("warning");
+        const randomIndex = Math.floor(Math.random() * noMessages.length);
+        warning.innerHTML = noMessages[randomIndex];
+
+        setTimeout(() => warning.innerHTML = "", 5000);
+
+        const noBtn = document.getElementById("no");
+        noBtn.style.position = "relative";
+        noBtn.style.left = (Math.random() * 100 - 50) + "px";
+        noBtn.style.top = (Math.random() * 20 - 10) + "px";
+
+        if (yesSize >= 60) {
+            noBtn.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
